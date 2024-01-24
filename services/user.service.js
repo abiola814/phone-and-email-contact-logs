@@ -46,9 +46,9 @@ const userUpdate = async ({ email, first_name, last_name, id }) => {
   }
   const user = await User.findOne({ _id: id });
 
-  user.email = email;
-  user.first_name = first_name;
-  user.last_name = last_name;
+  user.email = email ? email : user.email;
+  user.first_name = first_name ? first_name : user.first_name;
+  user.last_name = last_name ? last_name : user.last_name;
 
   await user.save();
   return user;
