@@ -39,13 +39,8 @@ const showCurrentUser = async (req, res) => {
 };
 // update user with user.save()
 const updateUser = async (req, res) => {
-  const { email, first_name, last_name } = req.body;
-  const result = await userUpdate(
-    email,
-    first_name,
-    last_name,
-    req.user.userId
-  );
+  const data = req.body;
+  const result = await userUpdate(data, req.user.userId);
 
   res.status(StatusCodes.OK).json({ result });
 };

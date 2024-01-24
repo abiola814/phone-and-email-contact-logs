@@ -40,17 +40,14 @@ const userFilter = async (req) => {
   }
 };
 
-const userUpdate = async ({ email, first_name, last_name, id }) => {
-  if (!email || !first_name || !last_name) {
+const userUpdate = async (data, id) => {
+  if (!data) {
     throw new CustomError.BadRequestError("Please provide all values");
   }
-  const user = await User.findOne({ _id: id });
+  const user = await User.findByIdAndUpdate(id, data, {
+    new: true,
+  });
 
-  user.email = email ? email : user.email;
-  user.first_name = first_name ? first_name : user.first_name;
-  user.last_name = last_name ? last_name : user.last_name;
-
-  await user.save();
   return user;
 };
 
