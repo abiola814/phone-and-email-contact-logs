@@ -40,11 +40,11 @@ const userFilter = async (req) => {
   }
 };
 
-const userUpdate = async ({ email, first_name, last_name }) => {
+const userUpdate = async ({ email, first_name, last_name, id }) => {
   if (!email || !first_name || !last_name) {
     throw new CustomError.BadRequestError("Please provide all values");
   }
-  const user = await User.findOne({ _id: req.user.userId });
+  const user = await User.findOne({ _id: id });
 
   user.email = email;
   user.first_name = first_name;
@@ -54,11 +54,11 @@ const userUpdate = async ({ email, first_name, last_name }) => {
   return user;
 };
 
-const changePassword = async ({ oldPassword, newPassword }) => {
+const changePassword = async ({ oldPassword, newPassword, id }) => {
   if (!oldPassword || !newPassword) {
     throw new CustomError.BadRequestError("Please provide both values");
   }
-  const user = await User.findOne({ _id: req.user.userId });
+  const user = await User.findOne({ _id: id });
 
   const isPasswordCorrect = await user.comparePassword(oldPassword);
   if (!isPasswordCorrect) {

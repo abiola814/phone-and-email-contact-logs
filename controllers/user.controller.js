@@ -40,13 +40,18 @@ const showCurrentUser = async (req, res) => {
 // update user with user.save()
 const updateUser = async (req, res) => {
   const { email, first_name, last_name } = req.body;
-  const result = await userUpdate(email, first_name, last_name);
+  const result = await userUpdate(
+    email,
+    first_name,
+    last_name,
+    req.user.userId
+  );
 
   res.status(StatusCodes.OK).json({ result });
 };
 const updateUserPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  await changePassword(oldPassword, newPassword);
+  await changePassword(oldPassword, newPassword, req.user.userId);
   res.status(StatusCodes.OK).json({ msg: "Success! Password Updated." });
 };
 
